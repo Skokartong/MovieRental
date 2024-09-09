@@ -27,26 +27,26 @@ namespace MovieRental.Controllers
         }
 
         [HttpGet]
-        [Route("GetUserById/{userId}")]
-        public async Task<IActionResult> GetUserById(int userId)
+        [Route("GetUserById/{id}")]
+        public async Task<IActionResult> GetUserById(int id)
         {
-            var user = await _userService.GetUserByIdAsync(userId);
+            var user = await _userService.GetUserByIdAsync(id);
             return Ok();
         }
 
         [HttpPut]
-        [Route("UpdateUser/{userId}")]
-        public async Task<IActionResult> UpdateUser(int userId, [FromBody] UserDTO userDTO)
+        [Route("UpdateUser/{id}")]
+        public async Task<IActionResult> UpdateUser(int id, [FromBody] UserDTO userDTO)
         {
-            await _userService.UpdateUserAsync(userId, userDTO);
+            await _userService.UpdateUserAsync(id, userDTO);
             return Ok();
         }
 
         [HttpDelete]
-        [Route("DeleteUser/{userId}")]
-        public async Task<IActionResult> DeleteUser(int userId)
+        [Route("DeleteUser/{id}")]
+        public async Task<IActionResult> DeleteUser(int id)
         {
-            await _userService.DeleteUserAsync(userId);
+            await _userService.DeleteUserAsync(id);
             return Ok();
         }
 

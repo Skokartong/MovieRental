@@ -36,9 +36,9 @@ namespace MovieRental.Data.Repos
            return await _context.Movies.ToListAsync();
         }
 
-        public async Task<Movie> GetMovieByIdAsync(int movieId)
+        public async Task<Movie> GetMovieByIdAsync(int id)
         {
-            var movie = await _context.Movies.FindAsync(movieId);
+            var movie = await _context.Movies.FindAsync(id);
             return movie;
         }
         public async Task<Movie> GetMovieByTitleAsync(string title)

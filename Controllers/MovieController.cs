@@ -35,27 +35,17 @@ namespace MovieRental.Controllers
         }
 
         [HttpPut]
-        [Route("UpdateMovie/{movieId}")]
-        public async Task<IActionResult> UpdateMovie(int movieId,[FromBody] MovieDTO movieDTO)
+        [Route("UpdateMovie/{id}")]
+        public async Task<IActionResult> UpdateMovie(int id,[FromBody] MovieDTO movieDTO)
         {
-            if (movieDTO == null)
-            {
-                return BadRequest("Movie data cannot be null");
-            }
-
-            if (movieId != movieDTO.Id)
-            {
-                return BadRequest("Movie ID mismatch");
-            }
-
-            var movie = await _movieService.GetMovieByIdAsync(movieId);
+            var movie = await _movieService.GetMovieByIdAsync(id);
 
             if (movie == null)
             {
                 return NotFound("Movie not found");
             }
 
-            await _movieService.UpdateMovieAsync(movieId, movieDTO);
+            await _movieService.UpdateMovieAsync(id, movieDTO);
 
             return NoContent();
         }
@@ -69,10 +59,10 @@ namespace MovieRental.Controllers
         }
 
         [HttpGet]
-        [Route("SearchMovieId/{movieId}")]
-        public async Task<IActionResult> SearchMovieId(int movieId)
+        [Route("SearchMovieId/{id}")]
+        public async Task<IActionResult> SearchMovieId(int id)
         {
-            var movie = await _movieService.GetMovieByIdAsync(movieId);
+            var movie = await _movieService.GetMovieByIdAsync(id);
             return Ok();
         }
 
@@ -85,16 +75,16 @@ namespace MovieRental.Controllers
         }
 
         [HttpDelete]
-        [Route("DeleteMovie/{movieId}")]
-        public async Task<IActionResult> DeleteMovie(int movieId)
+        [Route("DeleteMovie/{id}")]
+        public async Task<IActionResult> DeleteMovie(int id)
         {
-            var movie = await _movieService.GetMovieByIdAsync(movieId);
+            var movie = await _movieService.GetMovieByIdAsync(id);
             if (movie == null)
             {
                 return NotFound();
             }
 
-            await _movieService.DeleteMovieAsync(movieId);
+            await _movieService.DeleteMovieAsync(id);
             return NoContent();
         }
     }

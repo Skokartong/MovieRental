@@ -26,42 +26,42 @@ namespace MovieRental.Controllers
         }
 
         [HttpGet]
-        [Route("GetRentalById/{rentalId}")]
-        public async Task<IActionResult> GetRentalById(int rentalId)
+        [Route("GetRentalById/{id}")]
+        public async Task<IActionResult> GetRentalById(int id)
         {
-            var rental = await _rentalService.GetRentalByIdAsync(rentalId);
+            var rental = await _rentalService.GetRentalByIdAsync(id);
             return Ok();
         }
 
         [HttpPost]
         [Route("RentMovie")]
-        public async Task<IActionResult> RentMovie([FromBody] RentalDTO rentalDTO)
+        public async Task<IActionResult> RentMovie(int id, [FromBody] RentalDTO rentalDTO)
         {
-            await _rentalService.RentMovieAsync(rentalDTO);
+            await _rentalService.RentMovieAsync(id, rentalDTO);
             return Ok();
         }
 
         [HttpPost]
-        [Route("ReturnMovie/{rentalId}")]
-        public async Task<IActionResult> ReturnMovie(int rentalId)
+        [Route("ReturnMovie/{id}")]
+        public async Task<IActionResult> ReturnMovie(int id)
         {
-            await _rentalService.ReturnMovieAsync(rentalId);
+            await _rentalService.ReturnMovieAsync(id);
             return Ok();
         }
 
         [HttpDelete]
-        [Route("DeleteRental/{rentalId}")]
-        public async Task<ActionResult> DeleteRental(int rentalId)
+        [Route("DeleteRental/{id}")]
+        public async Task<ActionResult> DeleteRental(int id)
         {
-            await _rentalService.DeleteRentalAsync(rentalId);
+            await _rentalService.DeleteRentalAsync(id);
             return Ok();
         }
 
         [HttpPut]
         [Route("UpdateRental/{rentalId}")]
-        public async Task<IActionResult> UpdateRental(int rentalId, RentalDTO rentalDTO)
+        public async Task<IActionResult> UpdateRental(int id, RentalDTO rentalDTO)
         {
-            await _rentalService.UpdateRentalAsync(rentalId, rentalDTO);
+            await _rentalService.UpdateRentalAsync(id, rentalDTO);
             return Ok();
         }
     }

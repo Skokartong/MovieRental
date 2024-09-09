@@ -5,10 +5,10 @@ namespace MovieRental.Services.IServices
     public interface IRentalService
     {
         Task<IEnumerable<RentalDTO>> GetAllRentalsAsync();
-        Task<RentalDTO> GetRentalByIdAsync(int rentalId);
-        Task RentMovieAsync(RentalDTO rental);
-        Task ReturnMovieAsync(int rentalId);
-        Task DeleteRentalAsync(int rentalId);
-        Task UpdateRentalAsync(int rentalId, RentalDTO rentalDTO);
+        Task<RentalDTO> GetRentalByIdAsync(int id);
+        Task RentMovieAsync(int id, RentalDTO rental);
+        Task ReturnMovieAsync(int id);
+        Task DeleteRentalAsync(int id);
+        Task UpdateRentalAsync(int id, RentalDTO rentalDTO);
     }
 }

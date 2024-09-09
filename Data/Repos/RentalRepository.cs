@@ -18,9 +18,9 @@ namespace MovieRental.Data.Repos
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteRentalAsync(int rentalId)
+        public async Task DeleteRentalAsync(int id)
         {
-            var deleteRental = await _context.Rentals.FindAsync(rentalId);
+            var deleteRental = await _context.Rentals.FindAsync(id);
 
             if (deleteRental!=null)
             {
@@ -36,11 +36,11 @@ namespace MovieRental.Data.Repos
             return rentalsList;
         }
 
-        public async Task<Rental> GetRentalByIdAsync(int movieId)
+        public async Task<Rental> GetRentalByIdAsync(int id)
         {
-            var rentedMovie = await _context.Rentals
-                        .FirstOrDefaultAsync(r => r.FK_MovieId == movieId && r.ReturnDate == null);
-            return rentedMovie;
+            var rental = await _context.Rentals
+                        .FindAsync(id);
+            return rental;
         }
 
         public async Task UpdateRentalAsync(Rental rental)

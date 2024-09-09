@@ -20,9 +20,9 @@ namespace MovieRental.Data.Repos
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteUserAsync(int userId)
+        public async Task DeleteUserAsync(int id)
         {
-            var user = await _context.Users.FindAsync(userId);
+            var user = await _context.Users.FindAsync(id);
 
             if (user != null)
             {
@@ -38,9 +38,9 @@ namespace MovieRental.Data.Repos
             return allUsers;
         }
 
-        public async Task<User> GetUserById(int userId)
+        public async Task<User> GetUserById(int id)
         {
-            var getUser = await _context.Users.FindAsync(userId);
+            var getUser = await _context.Users.FindAsync(id);
                 return getUser;
         }
 

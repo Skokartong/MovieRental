@@ -31,9 +31,9 @@ namespace MovieRental.Services
             }).ToList();
         }
 
-        public async Task<RentalDTO> GetRentalByIdAsync(int rentalId)
+        public async Task<RentalDTO> GetRentalByIdAsync(int id)
         {
-            var getRental = await _rentalRepository.GetRentalByIdAsync(rentalId);
+            var getRental = await _rentalRepository.GetRentalByIdAsync(id);
 
             if (getRental==null)
             {
@@ -49,9 +49,9 @@ namespace MovieRental.Services
             };
         }
 
-        public async Task RentMovieAsync(RentalDTO rentalDTO)
+        public async Task RentMovieAsync(int id, RentalDTO rentalDTO)
         {
-            var existingRental = await _rentalRepository.GetRentalByIdAsync(rentalDTO.FK_MovieId);
+            var existingRental = await _rentalRepository.GetRentalByIdAsync(id);
             if (existingRental != null && existingRental.ReturnDate == null)
             {
                 throw new InvalidOperationException("The movie is already rented out");
@@ -68,9 +68,9 @@ namespace MovieRental.Services
             await _rentalRepository.AddRentalAsync(rental);
         }
 
-        public async Task ReturnMovieAsync(int rentalId)
+        public async Task ReturnMovieAsync(int id)
         {
-            var rental = await _rentalRepository.GetRentalByIdAsync(rentalId);
+            var rental = await _rentalRepository.GetRentalByIdAsync(id);
 
             if (rental.ReturnDate != null)
             {
@@ -82,13 +82,13 @@ namespace MovieRental.Services
             await _rentalRepository.UpdateRentalAsync(rental);
         }
 
-        public async Task UpdateRentalAsync(int rentalId, RentalDTO rentalDTO)
+        public async Task UpdateRentalAsync(int id, RentalDTO rentalDTO)
         {
-            var rental = await _rentalRepository.GetRentalByIdAsync(rentalId);
+            var rental = await _rentalRepository.GetRentalByIdAsync(id);
 
             if (rental == null)
             {
-                throw new Exception($"Rental with id {rentalId} not found");
+                throw new Exception($"Rental with id {id} not found");
             }
 
             rental.RentalDate = rentalDTO.RentalDate;

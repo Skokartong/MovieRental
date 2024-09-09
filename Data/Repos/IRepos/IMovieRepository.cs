@@ -5,7 +5,7 @@ namespace MovieRental.Data.Repos.IRepos
     public interface IMovieRepository
     {
         Task<IEnumerable<Movie>> GetAllMoviesAsync();
-        Task<Movie> GetMovieByIdAsync(int movieId);
+        Task<Movie> GetMovieByIdAsync(int id);
         Task<Movie> GetMovieByTitleAsync(string title);
         Task<List<Movie>> GetMoviesByGenreAsync(string genre);
         Task AddMovieAsync(Movie movie);

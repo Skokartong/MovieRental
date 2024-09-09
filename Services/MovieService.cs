@@ -28,9 +28,9 @@ namespace MovieRental.Services
             await _movieRepository.AddMovieAsync(movie);
         }
 
-        public async Task DeleteMovieAsync(int movieId)
+        public async Task DeleteMovieAsync(int id)
         {
-            var movie = await _movieRepository.GetMovieByIdAsync(movieId);
+            var movie = await _movieRepository.GetMovieByIdAsync(id);
 
             if (movie == null)
             {
@@ -40,9 +40,9 @@ namespace MovieRental.Services
             await _movieRepository.DeleteMovieAsync(movie);
         }
 
-        public async Task UpdateMovieAsync(int movieId, MovieDTO movieDTO)
+        public async Task UpdateMovieAsync(int id, MovieDTO movieDTO)
         {
-            var movie = await _movieRepository.GetMovieByIdAsync(movieId);
+            var movie = await _movieRepository.GetMovieByIdAsync(id);
 
             if (movie == null)
             {
@@ -69,9 +69,9 @@ namespace MovieRental.Services
             }).ToList();
         }
 
-        public async Task<MovieDTO> GetMovieByIdAsync(int movieId)
+        public async Task<MovieDTO> GetMovieByIdAsync(int id)
         {
-            var movie = await _movieRepository.GetMovieByIdAsync(movieId);
+            var movie = await _movieRepository.GetMovieByIdAsync(id);
 
             return new MovieDTO
             {

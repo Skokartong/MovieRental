@@ -34,14 +34,14 @@ namespace MovieRental.Services
             await _userRepository.AddUserAsync(newUser);
         }
 
-        public async Task DeleteUserAsync(int userId)
+        public async Task DeleteUserAsync(int id)
         {
-            await _userRepository.DeleteUserAsync(userId);
+            await _userRepository.DeleteUserAsync(id);
         }
 
-        public async Task<UserDTO> GetUserByIdAsync(int userId)
+        public async Task<UserDTO> GetUserByIdAsync(int id)
         {
-            var getUser = await _userRepository.GetUserById(userId);
+            var getUser = await _userRepository.GetUserById(id);
 
             if(getUser == null)
             {
@@ -56,9 +56,9 @@ namespace MovieRental.Services
             };
         }
 
-        public async Task UpdateUserAsync(int userId, UserDTO userDTO)
+        public async Task UpdateUserAsync(int id, UserDTO userDTO)
         {
-            var user = await _userRepository.GetUserById(userId);
+            var user = await _userRepository.GetUserById(id);
 
             if (user == null)
             {

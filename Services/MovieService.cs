@@ -49,7 +49,6 @@ namespace MovieRental.Services
                 throw new Exception("Movie not found");
             }
 
-                movie.Id = movieDTO.Id;
                 movie.Title = movieDTO.Title;
                 movie.Description = movieDTO.Description;
                 movie.Year = movieDTO.Year;

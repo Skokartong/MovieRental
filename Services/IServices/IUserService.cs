@@ -7,8 +7,8 @@ namespace MovieRental.Services.IServices
     {
         Task<IEnumerable<UserDTO>> GetAllUsersAsync();
         Task<UserDTO> GetUserByIdAsync(int id);
-        Task AddUserAsync(UserDTO user);
-        Task UpdateUserAsync(int id, UserDTO user);
+        Task AddUserAsync(UserDTO userDTO);
+        Task UpdateUserAsync(int id, UserDTO userDTO);
         Task DeleteUserAsync(int id);
     }
 }

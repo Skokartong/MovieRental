@@ -13,9 +13,9 @@ namespace MovieRental.Services
         {
             _rentalRepository = rentalRepository;
         }
-        public async Task DeleteRentalAsync(int rentalId)
+        public async Task DeleteRentalAsync(int id)
         {
-            await _rentalRepository.DeleteRentalAsync(rentalId);
+            await _rentalRepository.DeleteRentalAsync(id);
         }
 
         public async Task<IEnumerable<RentalDTO>> GetAllRentalsAsync()

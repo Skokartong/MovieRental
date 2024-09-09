@@ -23,7 +23,7 @@ namespace MovieRental.Controllers
         {
             var usersList = await _userService.GetAllUsersAsync();
 
-            return Ok();
+            return Ok(usersList);
         }
 
         [HttpGet]
@@ -31,7 +31,7 @@ namespace MovieRental.Controllers
         public async Task<IActionResult> GetUserById(int id)
         {
             var user = await _userService.GetUserByIdAsync(id);
-            return Ok();
+            return Ok(user);
         }
 
         [HttpPut]
@@ -39,7 +39,7 @@ namespace MovieRental.Controllers
         public async Task<IActionResult> UpdateUser(int id, [FromBody] UserDTO userDTO)
         {
             await _userService.UpdateUserAsync(id, userDTO);
-            return Ok();
+            return Ok($"User with id {id} now updated: {userDTO}");
         }
 
         [HttpDelete]

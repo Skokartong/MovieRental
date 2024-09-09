@@ -22,13 +22,13 @@ namespace MovieRental.Services
                 Address = u.Address
             }).ToList();
         }
-        public async Task AddUserAsync(UserDTO user)
+        public async Task AddUserAsync(UserDTO userDTO)
         {
             var newUser = new User
             {
-                Name = user.Name,
-                Email = user.Email,
-                Address = user.Address
+                Name = userDTO.Name,
+                Email = userDTO.Email,
+                Address = userDTO.Address
             };
 
             await _userRepository.AddUserAsync(newUser);

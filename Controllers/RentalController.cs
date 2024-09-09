@@ -22,7 +22,7 @@ namespace MovieRental.Controllers
         {
             var rentalsList = await _rentalService.GetAllRentalsAsync();
 
-            return Ok();
+            return Ok(rentalsList);
         }
 
         [HttpGet]
@@ -30,7 +30,7 @@ namespace MovieRental.Controllers
         public async Task<IActionResult> GetRentalById(int id)
         {
             var rental = await _rentalService.GetRentalByIdAsync(id);
-            return Ok();
+            return Ok(rental);
         }
 
         [HttpPost]
@@ -38,7 +38,7 @@ namespace MovieRental.Controllers
         public async Task<IActionResult> RentMovie(int id, [FromBody] RentalDTO rentalDTO)
         {
             await _rentalService.RentMovieAsync(id, rentalDTO);
-            return Ok();
+            return Ok($"Rental with id: {id} confirmed");
         }
 
         [HttpPost]
@@ -46,23 +46,23 @@ namespace MovieRental.Controllers
         public async Task<IActionResult> ReturnMovie(int id)
         {
             await _rentalService.ReturnMovieAsync(id);
-            return Ok();
+            return Ok($"Movie is now returned");
         }
 
         [HttpDelete]
         [Route("DeleteRental/{id}")]
-        public async Task<ActionResult> DeleteRental(int id)
+        public async Task<IActionResult> DeleteRental(int id)
         {
             await _rentalService.DeleteRentalAsync(id);
-            return Ok();
+            return Ok($"Rental with id {id} is now deleted");
         }
 
         [HttpPut]
-        [Route("UpdateRental/{rentalId}")]
+        [Route("UpdateRental/{id}")]
         public async Task<IActionResult> UpdateRental(int id, RentalDTO rentalDTO)
         {
             await _rentalService.UpdateRentalAsync(id, rentalDTO);
-            return Ok();
+            return Ok($"Rental is updated");
         }
     }
 }

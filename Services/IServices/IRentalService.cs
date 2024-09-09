@@ -6,7 +6,7 @@ namespace MovieRental.Services.IServices
     {
         Task<IEnumerable<RentalDTO>> GetAllRentalsAsync();
         Task<RentalDTO> GetRentalByIdAsync(int id);
-        Task RentMovieAsync(int id, RentalDTO rental);
+        Task RentMovieAsync(int id, RentalDTO rentalDTO);
         Task ReturnMovieAsync(int id);
         Task DeleteRentalAsync(int id);
         Task UpdateRentalAsync(int id, RentalDTO rentalDTO);

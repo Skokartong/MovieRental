@@ -55,7 +55,7 @@ namespace MovieRental.Controllers
         public async Task<IActionResult> SearchMovieTitle(string title)
         {
             var movie = await _movieService.SearchMovieByNameAsync(title);
-            return Ok();
+            return Ok(movie);
         }
 
         [HttpGet]
@@ -63,7 +63,7 @@ namespace MovieRental.Controllers
         public async Task<IActionResult> SearchMovieId(int id)
         {
             var movie = await _movieService.GetMovieByIdAsync(id);
-            return Ok();
+            return Ok(movie);
         }
 
         [HttpGet]
@@ -71,7 +71,7 @@ namespace MovieRental.Controllers
         public async Task<IActionResult> SearchMovieGenre(string genre)
         {
             var movie = await _movieService.SearchMoviesByGenreAsync(genre);
-            return Ok();
+            return Ok(movie);
         }
 
         [HttpDelete]

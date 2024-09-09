@@ -23,7 +23,7 @@ namespace MovieRental.Controllers
         public async Task<IActionResult> AddMovie([FromBody] MovieDTO movieDTO)
         {
             await _movieService.AddMovieAsync(movieDTO);
-            return Ok();
+            return CreatedAtAction(nameof(AddMovie), new { movieDTO });
         }
 
         [HttpGet]

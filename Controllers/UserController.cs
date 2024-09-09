@@ -47,15 +47,15 @@ namespace MovieRental.Controllers
         public async Task<IActionResult> DeleteUser(int id)
         {
             await _userService.DeleteUserAsync(id);
-            return Ok();
+            return Ok($"User with id {id} is now deleted");
         }
 
         [HttpPost]
         [Route("AddUser")]
-        public async Task<ActionResult> AddUser([FromBody] UserDTO userDTO)
+        public async Task<ActionResult<UserDTO>> AddUser([FromBody] UserDTO userDTO)
         {
             await _userService.AddUserAsync(userDTO);
-            return Ok();
+            return CreatedAtAction(nameof(GetUserById), new { userId = userDTO.Id }, userDTO);
         }
     }
 }

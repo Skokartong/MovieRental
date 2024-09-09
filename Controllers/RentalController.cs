@@ -38,7 +38,7 @@ namespace MovieRental.Controllers
         public async Task<IActionResult> RentMovie(int id, [FromBody] RentalDTO rentalDTO)
         {
             await _rentalService.RentMovieAsync(id, rentalDTO);
-            return Ok($"Rental with id: {id} confirmed");
+            return CreatedAtAction(nameof(RentMovie), new { id }, rentalDTO);
         }
 
         [HttpPost]

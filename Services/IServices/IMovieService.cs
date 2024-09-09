@@ -8,6 +8,7 @@ namespace MovieRental.Services.IServices
         Task<MovieDTO> GetMovieByIdAsync(int movieId);
         Task AddMovieAsync(MovieDTO movieDTO);
         Task DeleteMovieAsync(int movieId);
+        Task UpdateMovieAsync(int movieId, MovieDTO movieDTO);
         Task<IEnumerable<MovieDTO>> SearchMoviesByGenreAsync(string genre);
         Task<MovieDTO> SearchMovieByNameAsync(string title);
     }

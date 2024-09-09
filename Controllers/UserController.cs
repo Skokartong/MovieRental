@@ -23,31 +23,31 @@ namespace MovieRental.Controllers
         {
             var usersList = await _userService.GetAllUsersAsync();
 
-            return Ok(usersList);
+            return Ok();
         }
 
         [HttpGet]
-        [Route("GetUserById")]
+        [Route("GetUserById/{userId}")]
         public async Task<IActionResult> GetUserById(int userId)
         {
             var user = await _userService.GetUserByIdAsync(userId);
-            return Ok(user);
+            return Ok();
         }
 
         [HttpPut]
-        [Route("UpdateUser")]
-        public async Task<IActionResult> UpdateUser([FromBody] UserDTO userDTO)
+        [Route("UpdateUser/{userId}")]
+        public async Task<IActionResult> UpdateUser(int userId, [FromBody] UserDTO userDTO)
         {
-            await _userService.UpdateUserAsync(userDTO);
-            return Ok(userDTO);
+            await _userService.UpdateUserAsync(userId, userDTO);
+            return Ok();
         }
 
         [HttpDelete]
-        [Route("DeleteUser")]
+        [Route("DeleteUser/{userId}")]
         public async Task<IActionResult> DeleteUser(int userId)
         {
             await _userService.DeleteUserAsync(userId);
-            return Ok(userId);
+            return Ok();
         }
 
         [HttpPost]
@@ -55,7 +55,7 @@ namespace MovieRental.Controllers
         public async Task<ActionResult> AddUser([FromBody] UserDTO userDTO)
         {
             await _userService.AddUserAsync(userDTO);
-            return Ok(userDTO);
+            return Ok();
         }
     }
 }

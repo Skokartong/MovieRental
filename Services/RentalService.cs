@@ -16,7 +16,6 @@ namespace MovieRental.Services
         public async Task DeleteRentalAsync(int rentalId)
         {
             await _rentalRepository.DeleteRentalAsync(rentalId);
-
         }
 
         public async Task<IEnumerable<RentalDTO>> GetAllRentalsAsync()
@@ -55,7 +54,7 @@ namespace MovieRental.Services
             var existingRental = await _rentalRepository.GetRentalByIdAsync(rentalDTO.FK_MovieId);
             if (existingRental != null && existingRental.ReturnDate == null)
             {
-                throw new InvalidOperationException("The movie is already rented out.");
+                throw new InvalidOperationException("The movie is already rented out");
             }
 
             var rental = new Rental
@@ -69,16 +68,33 @@ namespace MovieRental.Services
             await _rentalRepository.AddRentalAsync(rental);
         }
 
-        public async Task ReturnMovieAsync(RentalDTO rentalDTO)
+        public async Task ReturnMovieAsync(int rentalId)
         {
-            var rental = await _rentalRepository.GetRentalByIdAsync(rentalDTO.FK_MovieId);
+            var rental = await _rentalRepository.GetRentalByIdAsync(rentalId);
 
             if (rental.ReturnDate != null)
             {
-                throw new InvalidOperationException("This movie has already been returned.");
+                throw new Exception("This movie has already been returned");
             }
 
             rental.ReturnDate = DateTime.Now;
+
+            await _rentalRepository.UpdateRentalAsync(rental);
+        }
+
+        public async Task UpdateRentalAsync(int rentalId, RentalDTO rentalDTO)
+        {
+            var rental = await _rentalRepository.GetRentalByIdAsync(rentalId);
+
+            if (rental == null)
+            {
+                throw new Exception($"Rental with id {rentalId} not found");
+            }
+
+            rental.RentalDate = rentalDTO.RentalDate;
+            rental.ReturnDate = rentalDTO.ReturnDate;
+            rental.FK_MovieId = rentalDTO.FK_MovieId;
+            rental.FK_UserId = rentalDTO.FK_UserId;
 
             await _rentalRepository.UpdateRentalAsync(rental);
         }

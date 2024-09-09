@@ -22,15 +22,15 @@ namespace MovieRental.Controllers
         {
             var rentalsList = await _rentalService.GetAllRentalsAsync();
 
-            return Ok(rentalsList);
+            return Ok();
         }
 
         [HttpGet]
-        [Route("GetRentalById")]
+        [Route("GetRentalById/{rentalId}")]
         public async Task<IActionResult> GetRentalById(int rentalId)
         {
             var rental = await _rentalService.GetRentalByIdAsync(rentalId);
-            return Ok(rental);
+            return Ok();
         }
 
         [HttpPost]
@@ -38,23 +38,31 @@ namespace MovieRental.Controllers
         public async Task<IActionResult> RentMovie([FromBody] RentalDTO rentalDTO)
         {
             await _rentalService.RentMovieAsync(rentalDTO);
-            return Ok(rentalDTO);
+            return Ok();
         }
 
         [HttpPost]
-        [Route("ReturnMovie")]
-        public async Task<IActionResult> ReturnMovie([FromBody] RentalDTO rentalDTO)
+        [Route("ReturnMovie/{rentalId}")]
+        public async Task<IActionResult> ReturnMovie(int rentalId)
         {
-            await _rentalService.ReturnMovieAsync(rentalDTO);
-            return Ok(rentalDTO);
+            await _rentalService.ReturnMovieAsync(rentalId);
+            return Ok();
         }
 
         [HttpDelete]
-        [Route("DeleteRental")]
+        [Route("DeleteRental/{rentalId}")]
         public async Task<ActionResult> DeleteRental(int rentalId)
         {
             await _rentalService.DeleteRentalAsync(rentalId);
-            return Ok(rentalId);
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("UpdateRental/{rentalId}")]
+        public async Task<IActionResult> UpdateRental(int rentalId, RentalDTO rentalDTO)
+        {
+            await _rentalService.UpdateRentalAsync(rentalId, rentalDTO);
+            return Ok();
         }
     }
 }

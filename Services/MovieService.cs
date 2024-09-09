@@ -1,4 +1,5 @@
-﻿using Microsoft.Identity.Client;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.Identity.Client;
 using MovieRental.Data.Repos.IRepos;
 using MovieRental.Models;
 using MovieRental.Models.DTOs;
@@ -29,7 +30,7 @@ namespace MovieRental.Services
 
         public async Task DeleteMovieAsync(int movieId)
         {
-            var movie = await _movieRepository.DeleteMovieAsync(movieId);
+            var movie = await _movieRepository.GetMovieByIdAsync(movieId);
 
             if (movie == null)
             {
@@ -37,6 +38,23 @@ namespace MovieRental.Services
             }
 
             await _movieRepository.DeleteMovieAsync(movie);
+        }
+
+        public async Task UpdateMovieAsync(int movieId, MovieDTO movieDTO)
+        {
+            var movie = await _movieRepository.GetMovieByIdAsync(movieId);
+
+            if (movie == null)
+            {
+                throw new Exception("Movie not found");
+            }
+
+                movie.Id = movieDTO.Id;
+                movie.Title = movieDTO.Title;
+                movie.Description = movieDTO.Description;
+                movie.Year = movieDTO.Year;
+
+                await _movieRepository.UpdateMovieAsync(movie);
         }
 
         public async Task<IEnumerable<MovieDTO>> GetAllMoviesAsync()

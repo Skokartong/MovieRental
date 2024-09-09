@@ -56,16 +56,20 @@ namespace MovieRental.Services
             };
         }
 
-        public async Task UpdateUserAsync(UserDTO user)
+        public async Task UpdateUserAsync(int userId, UserDTO userDTO)
         {
-            var updatedUser = new User
-            {
-                Name = user.Name,
-                Email = user.Email,
-                Address = user.Address
-            };
+            var user = await _userRepository.GetUserById(userId);
 
-            await _userRepository.UpdateUserAsync(updatedUser);
+            if (user == null)
+            {
+                throw new Exception("User not found");
+            }
+
+            user.Name = userDTO.Name;
+            user.Email = userDTO.Email;
+            user.Address = userDTO.Address;
+
+            await _userRepository.UpdateUserAsync(user);
         }
     }
 }

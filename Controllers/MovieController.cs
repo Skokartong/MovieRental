@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MovieRental.Models;
 using MovieRental.Models.DTOs;
 using MovieRental.Services;
 using MovieRental.Services.IServices;
@@ -22,7 +23,7 @@ namespace MovieRental.Controllers
         public async Task<IActionResult> AddMovie([FromBody] MovieDTO movieDTO)
         {
             await _movieService.AddMovieAsync(movieDTO);
-            return Ok(movieDTO);
+            return Ok();
         }
 
         [HttpGet]
@@ -34,42 +35,67 @@ namespace MovieRental.Controllers
         }
 
         [HttpPut]
-        [Route("UpdateMovie")]
-        public async Task<IActionResult> UpdateMovie(int movieId)
+        [Route("UpdateMovie/{movieId}")]
+        public async Task<IActionResult> UpdateMovie(int movieId,[FromBody] MovieDTO movieDTO)
         {
+            if (movieDTO == null)
+            {
+                return BadRequest("Movie data cannot be null");
+            }
 
+            if (movieId != movieDTO.Id)
+            {
+                return BadRequest("Movie ID mismatch");
+            }
+
+            var movie = await _movieService.GetMovieByIdAsync(movieId);
+
+            if (movie == null)
+            {
+                return NotFound("Movie not found");
+            }
+
+            await _movieService.UpdateMovieAsync(movieId, movieDTO);
+
+            return NoContent();
         }
 
         [HttpGet]
-        [Route("SearchMovieTitle")]
+        [Route("SearchMovieTitle/{title}")]
         public async Task<IActionResult> SearchMovieTitle(string title)
         {
             var movie = await _movieService.SearchMovieByNameAsync(title);
-            return Ok(movie);
+            return Ok();
         }
 
         [HttpGet]
-        [Route("SearchMovieId")]
+        [Route("SearchMovieId/{movieId}")]
         public async Task<IActionResult> SearchMovieId(int movieId)
         {
             var movie = await _movieService.GetMovieByIdAsync(movieId);
-            return Ok(movie);
+            return Ok();
         }
 
         [HttpGet]
-        [Route("SearchMovieGenre")]
+        [Route("SearchMovieGenre/{genre}")]
         public async Task<IActionResult> SearchMovieGenre(string genre)
         {
             var movie = await _movieService.SearchMoviesByGenreAsync(genre);
-            return Ok(movie);
+            return Ok();
         }
 
         [HttpDelete]
-        [Route("DeleteMovie")]
+        [Route("DeleteMovie/{movieId}")]
         public async Task<IActionResult> DeleteMovie(int movieId)
         {
+            var movie = await _movieService.GetMovieByIdAsync(movieId);
+            if (movie == null)
+            {
+                return NotFound();
+            }
+
             await _movieService.DeleteMovieAsync(movieId);
-            return Ok();
+            return NoContent();
         }
     }
 }

@@ -29,7 +29,14 @@ namespace MovieRental.Services
 
         public async Task DeleteMovieAsync(int movieId)
         {
-            await _movieRepository.DeleteMovieAsync(movieId);
+            var movie = await _movieRepository.DeleteMovieAsync(movieId);
+
+            if (movie == null)
+            {
+                throw new Exception("Movie not found");
+            }
+
+            await _movieRepository.DeleteMovieAsync(movie);
         }
 
         public async Task<IEnumerable<MovieDTO>> GetAllMoviesAsync()

@@ -10,6 +10,6 @@ namespace MovieRental.Data.Repos.IRepos
         Task<List<Movie>> GetMoviesByGenreAsync(string genre);
         Task AddMovieAsync(Movie movie);
         Task UpdateMovieAsync(Movie movie);
-        Task DeleteMovieAsync(int movieId);
+        Task DeleteMovieAsync(Movie movie);
     }
 }

@@ -33,6 +33,13 @@ namespace MovieRental.Controllers
             return Ok(moviesList);
         }
 
+        [HttpPut]
+        [Route("UpdateMovie")]
+        public async Task<IActionResult> UpdateMovie(int movieId)
+        {
+
+        }
+
         [HttpGet]
         [Route("SearchMovieTitle")]
         public async Task<IActionResult> SearchMovieTitle(string title)

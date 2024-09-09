@@ -19,15 +19,15 @@ namespace MovieRental.Data.Repos
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteMovieAsync(int movieId)
+        public async Task DeleteMovieAsync(Movie movie)
         {
-               var deleteMovie = await _context.Movies.FindAsync(movieId);
+            _context.Movies.Remove(movie);
+            await _context.SaveChangesAsync();
+        }
 
-            if(deleteMovie!=null)
-            {
-                _context.Movies.Remove(deleteMovie);
-            }
-
+        public async Task UpdateMovieAsync(Movie movie)
+        {
+            _context.Movies.Update(movie);
             await _context.SaveChangesAsync();
         }
 
@@ -52,12 +52,6 @@ namespace MovieRental.Data.Repos
             return await _context.Movies
                                  .Where(m => m.Genre == genre)
                                  .ToListAsync();
-        }
-
-        public async Task UpdateMovieAsync(Movie movie)
-        {
-            _context.Movies.Update(movie);
-            await _context.SaveChangesAsync();
         }
     }
 }

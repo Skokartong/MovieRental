@@ -43,6 +43,11 @@ namespace MovieRental.Data.Repos
             return rental;
         }
 
+        public async Task<bool> IsMovieRentedAsync(int movieId)
+        {
+            return await _context.Rentals.AnyAsync(r => r.FK_MovieId == movieId && r.ReturnDate == null);
+        }
+
         public async Task UpdateRentalAsync(Rental rental)
         {
             _context.Rentals.Update(rental);

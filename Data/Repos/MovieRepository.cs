@@ -38,7 +38,8 @@ namespace MovieRental.Data.Repos
 
         public async Task<Movie> GetMovieByIdAsync(int id)
         {
-            var movie = await _context.Movies.FindAsync(id);
+            var movie = await _context.Movies.FirstOrDefaultAsync(m => m.Id == id);
+
             return movie;
         }
         public async Task<Movie> GetMovieByTitleAsync(string title)

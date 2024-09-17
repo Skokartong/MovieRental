@@ -34,11 +34,11 @@ namespace MovieRental.Controllers
         }
 
         [HttpPost]
-        [Route("RentMovie")]
-        public async Task<IActionResult> RentMovie(int id, [FromBody] RentalDTO rentalDTO)
+        [Route("RentMovie/{movieId}")]
+        public async Task<IActionResult> RentMovie(int movieId, [FromBody] RentalDTO rentalDTO)
         {
-            await _rentalService.RentMovieAsync(id, rentalDTO);
-            return CreatedAtAction(nameof(RentMovie), new { id }, rentalDTO);
+            await _rentalService.RentMovieAsync(movieId, rentalDTO);
+            return CreatedAtAction(nameof(RentMovie), new { movieId }, rentalDTO);
         }
 
         [HttpPost]

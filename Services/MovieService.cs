@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.Identity.Client;
 using MovieRental.Data.Repos.IRepos;
 using MovieRental.Models;
 using MovieRental.Models.DTOs;
@@ -19,6 +18,7 @@ namespace MovieRental.Services
         {
             var movie = new Movie
             {
+                Id = movieDTO.Id,
                 Title = movieDTO.Title,
                 Genre = movieDTO.Genre,
                 Year = movieDTO.Year,
@@ -40,20 +40,27 @@ namespace MovieRental.Services
             await _movieRepository.DeleteMovieAsync(movie);
         }
 
-        public async Task UpdateMovieAsync(int id, MovieDTO movieDTO)
+        public async Task<bool> UpdateMovieAsync(MovieDTO movieDTO)
         {
-            var movie = await _movieRepository.GetMovieByIdAsync(id);
+            var movie = await _movieRepository.GetMovieByIdAsync(movieDTO.Id);
 
             if (movie == null)
             {
                 throw new Exception("Movie not found");
             }
 
+            if (movie != null)
+            {
                 movie.Title = movieDTO.Title;
                 movie.Description = movieDTO.Description;
+                movie.Genre = movieDTO.Genre;
                 movie.Year = movieDTO.Year;
 
                 await _movieRepository.UpdateMovieAsync(movie);
+                return true;
+            }
+
+            return false;
         }
 
         public async Task<IEnumerable<MovieDTO>> GetAllMoviesAsync()
@@ -62,6 +69,7 @@ namespace MovieRental.Services
 
             return moviesList.Select(m => new MovieDTO
             {
+                Id = m.Id,
                 Title = m.Title,
                 Genre = m.Genre,
                 Year = m.Year,
@@ -69,42 +77,65 @@ namespace MovieRental.Services
             }).ToList();
         }
 
-        public async Task<MovieDTO> GetMovieByIdAsync(int id)
+        public async Task<MovieDTO?> GetMovieByIdAsync(int id)
         {
-            var movie = await _movieRepository.GetMovieByIdAsync(id);
+            var movieFound = await _movieRepository.GetMovieByIdAsync(id);
 
-            return new MovieDTO
+            if (movieFound != null)
             {
-                Title = movie.Title,
-                Description = movie.Description,
-                Year = movie.Year,
-                Genre = movie.Genre
-            };
+                var movie = new MovieDTO
+                {
+                    Id = movieFound.Id,
+                    Title = movieFound.Title,
+                    Description = movieFound.Description,
+                    Year = movieFound.Year,
+                    Genre = movieFound.Genre
+                };
+
+                return movie;
+            }
+
+            return null;
         }
 
         public async Task<IEnumerable<MovieDTO>> SearchMoviesByGenreAsync(string genre)
         {
             var movies = await _movieRepository.GetMoviesByGenreAsync(genre);
 
-            return movies.Select(m => new MovieDTO
+            if (movies != null)
             {
-                Title = m.Title,
-                Year = m.Year,
-                Genre = m.Genre,
-                Description = m.Description
-            }).ToList();
+                return movies.Select(m => new MovieDTO
+                {
+                    Id = m.Id,
+                    Title = m.Title,
+                    Year = m.Year,
+                    Genre = m.Genre,
+                    Description = m.Description
+                }).ToList();
+            }
+
+            return null;
         }
 
         public async Task<MovieDTO> SearchMovieByNameAsync(string title)
         {
-            var movie = await _movieRepository.GetMovieByTitleAsync(title);
-            return new MovieDTO
+            var movieFound = await _movieRepository.GetMovieByTitleAsync(title);
+
+            if (movieFound != null)
             {
-                Title = movie.Title,
-                Description = movie.Description,
-                Year = movie.Year,
-                Genre = movie.Genre
-            };
+                var movie = new MovieDTO
+                {
+                    Id = movieFound.Id,
+                    Title = movieFound.Title,
+                    Description = movieFound.Description,
+                    Year = movieFound.Year,
+                    Genre = movieFound.Genre
+                };
+
+                return movie;
+            }
+
+            return null;
         }
     }
 }

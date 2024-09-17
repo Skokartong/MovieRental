@@ -38,16 +38,25 @@ namespace MovieRental.Controllers
         [Route("UpdateMovie/{id}")]
         public async Task<IActionResult> UpdateMovie(int id,[FromBody] MovieDTO movieDTO)
         {
-            var movie = await _movieService.GetMovieByIdAsync(id);
-
-            if (movie == null)
+            if (id != movieDTO.Id)
             {
-                return NotFound("Movie not found");
+                return BadRequest("Movie ID mismatch");
             }
 
-            await _movieService.UpdateMovieAsync(id, movieDTO);
+            await _movieService.UpdateMovieAsync(movieDTO);
+            return NoContent(); 
+        }
 
-            return NoContent();
+        [HttpGet]
+        [Route("GetMovieById/{id}")]
+        public async Task<IActionResult> SearchMovieId(int id)
+        {
+            var movieDTO = await _movieService.GetMovieByIdAsync(id);
+            if (movieDTO == null)
+            {
+                return NotFound();
+            }
+            return Ok(movieDTO);
         }
 
         [HttpGet]
@@ -59,27 +68,19 @@ namespace MovieRental.Controllers
         }
 
         [HttpGet]
-        [Route("SearchMovieId/{id}")]
-        public async Task<IActionResult> SearchMovieId(int id)
-        {
-            var movie = await _movieService.GetMovieByIdAsync(id);
-            return Ok(movie);
-        }
-
-        [HttpGet]
         [Route("SearchMovieGenre/{genre}")]
         public async Task<IActionResult> SearchMovieGenre(string genre)
         {
-            var movie = await _movieService.SearchMoviesByGenreAsync(genre);
-            return Ok(movie);
+            var movieDTO = await _movieService.SearchMoviesByGenreAsync(genre);
+            return Ok(movieDTO);
         }
 
         [HttpDelete]
         [Route("DeleteMovie/{id}")]
         public async Task<IActionResult> DeleteMovie(int id)
         {
-            var movie = await _movieService.GetMovieByIdAsync(id);
-            if (movie == null)
+            var movieDTO = await _movieService.GetMovieByIdAsync(id);
+            if (movieDTO == null)
             {
                 return NotFound();
             }

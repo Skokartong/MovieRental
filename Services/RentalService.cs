@@ -49,10 +49,11 @@ namespace MovieRental.Services
             };
         }
 
-        public async Task RentMovieAsync(int id, RentalDTO rentalDTO)
+        public async Task RentMovieAsync(int movieId, RentalDTO rentalDTO)
         {
-            var existingRental = await _rentalRepository.GetRentalByIdAsync(id);
-            if (existingRental != null && existingRental.ReturnDate == null)
+            var existingRental = await _rentalRepository.IsMovieRentedAsync(movieId);
+
+            if (existingRental)
             {
                 throw new InvalidOperationException("The movie is already rented out");
             }

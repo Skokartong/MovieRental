@@ -8,6 +8,7 @@ namespace MovieRental.Data.Repos.IRepos
         Task<Rental> GetRentalByIdAsync(int id);
         Task AddRentalAsync(Rental rental);
         Task UpdateRentalAsync(Rental rental);
+        Task<bool> IsMovieRentedAsync(int movieId);
         Task DeleteRentalAsync(int id);
     }
 }
